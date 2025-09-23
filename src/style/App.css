@@ -1,0 +1,8 @@
+:root {
+    --Layout-x: 140px
+
+}
+
+body, html, * {
+  font-family: 'Noto Sans TC', 'Noto Sans', 'Microsoft JhengHei', Arial, sans-serif;
+}
