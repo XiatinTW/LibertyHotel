@@ -119,5 +119,92 @@ export default {
             }
         }
     }
+
+    @media (max-width: 1024px) {
+        .Roominfo {
+            flex-direction: column;
+            height: 100vh;
+            overflow-x: hidden;
+
+            img, .FacilityText {
+                width: 100%;
+                max-width: 100%;
+                height: 50%;
+            }
+
+            .FacilityText {
+                width: 90%;
+                height: 50%;
+                padding: 25px 45px;
+
+                h2 {
+                    font-size: 32px;
+                    margin-top: 20px;
+                }
+
+                h5 {
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    font-size: 14px;
+                    max-width: 100%;
+                }
+
+                .selecttool {
+                    top: auto;
+                    bottom: 10px;
+                    right: 50%;
+                    transform: translateX(50%);
+                    padding: 10px 15px;
+                    flex-direction: row;
+                    background: rgba(84, 105, 128, 0.15);
+                    border-radius: 10px;
+
+                    .btn {
+                        max-width: none;
+                        padding: 5px 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+         .Roominfo .FacilityText {
+            padding: 15px 25px;
+
+            h2 {
+                font-size: 24px;
+                margin-top: 15px;
+            }
+
+            h5 {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+
+            .selecttool {
+                bottom: 15px;
+                padding: 8px 10px;
+                gap: 8px;
+                width: 100%;
+                justify-content: center;
+
+                .btn {
+                    padding: 3px 8px;
+
+                    p {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
 }
 </style>

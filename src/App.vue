@@ -96,4 +96,10 @@ body:not(.fp-responsive) .fp-overflow {
 .fp-warning, .fp-watermark {
   display: none !important;
 }
+
+@media (max-width: 768px) {
+  #fp-nav {
+    left: 5px !important;
+  }
+}
 </style>

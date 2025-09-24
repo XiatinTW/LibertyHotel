@@ -65,6 +65,37 @@ export default {
       line-height: 400%;
       font-family: 'Noto Sans TC';
     }
+
+
+    @media (max-width: 1024px) {
+      .title {
+        h1 {
+          font-size: 48px;
+        }
+      }
+      .text {
+        max-width: 70%;
+        p {
+          font-size: 14px;
+          line-height: 200%;
+        }
+      }
+    }
+    @media (max-width: 768px) {
+      .title {
+        margin-top: 50px;
+        h1 {
+          font-size: 32px;
+        }
+      }
+      .text {
+        max-width: 90%;
+        p {
+          font-size: 12px;
+          line-height: 150%;
+        }
+      }
+    }
   }
 }
 </style>

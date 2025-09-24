@@ -124,5 +124,96 @@ export default {
             }
         }
     }
+
+    @media (max-width: 1024px) {
+        .FacilityServices {
+            flex-direction: column;
+            height: 100vh;
+            overflow-x: hidden;
+
+            img {
+                width: 100%;
+                max-width: 100%;
+                height: 50%;
+            }
+
+            .FacilityText {
+                width: 90%;
+                height: 50%;
+                padding: 25px 45px;
+
+                h2 {
+                    font-size: 32px;
+                    margin-top: 20px;
+                }
+
+                h5 {
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    font-size: 14px;
+                }
+
+                .selecttool {
+                    flex-direction: row;
+                    top: auto;
+                    bottom: 20px;
+                    right: 50%;
+                    transform: translateX(50%);
+                    padding: 10px 15px;
+                    gap: 10px;
+                    border-radius: 10px;
+
+                    .btn {
+                        max-width: none;
+                        padding: 5px 10px;
+
+                        p {
+                            font-size: 14px;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        .FacilityServices .FacilityText {
+            padding: 15px 25px;
+
+            h2 {
+                font-size: 24px;
+                margin-top: 15px;
+            }
+
+            h5 {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+
+            .selecttool {
+                bottom: 15px;
+                padding: 8px 10px;
+                gap: 8px;
+                width: 100%;
+                justify-content: center;
+
+                .btn {
+                    padding: 3px 8px;
+
+                    p {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
 }
 </style>

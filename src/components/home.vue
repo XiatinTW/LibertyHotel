@@ -210,6 +210,7 @@ export default {
 
           span {
             text-align: center;
+            font-size: 16px;
           }
 
           button {
@@ -302,6 +303,55 @@ export default {
           cursor: pointer;
           background: rgba(255, 255, 255, 0.9);
         }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .CheckRoom {
+      width: 90vw;
+      height: 20%;
+      bottom: 20px;
+
+      .body {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+
+        .person-room-selector {
+          margin-right: 0;
+          width: 100%;
+          justify-content: center;
+        }
+
+        .mx-datepicker-range {
+          width: 100%;
+        }
+        .mx-input-wrapper .mx-input {
+          text-align: center;
+        }
+
+        button {
+          max-width: none;
+          height: 20%;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    main.home {
+      .hometitle {
+        width: 50vw;
+        height: 50vw;
+        top: 35%;
+      }
+
+      .hometext {
+        width: 10vw;
+        height: 10vw;
+        top: 45%;
       }
     }
   }

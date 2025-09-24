@@ -86,5 +86,11 @@ export default {
             z-index: -1;
         }
     }
+    @media (max-width: 768px) {
+        .navbar-item {
+            width: 70px;
+            font-size: 14px;
+        }
+    }
 }
 </style>

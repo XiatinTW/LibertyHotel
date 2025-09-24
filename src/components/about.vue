@@ -65,5 +65,32 @@ export default {
       font-family: 'Noto Sans TC';
     }
   }
+
+  @media (max-width: 1024px) {
+    main.about {
+      .title {
+        margin-top: 50px;
+
+        h1 {
+          font-size: 48px;
+        }
+      }
+
+      .text {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        max-width: 80%;
+
+        p {
+          font-size: 14px;
+          line-height: 150%;
+        }
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
 }
 </style>

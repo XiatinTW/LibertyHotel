@@ -204,5 +204,98 @@ export default {
             }
         }
     }
+
+    @media (max-width: 1024px) {
+        main.Notice {
+            .title {
+                justify-content: center;
+                
+                h1 {
+                    font-size: 48px;
+                }
+            }
+
+            .content {
+                .navigation {
+                    max-width: 90%;
+                    p {
+                        font-size: 16px;
+                        padding: 6px;
+                    }
+                }
+
+                .noticelist {
+                    padding: 0 10px;
+
+                    .notice {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 10px;
+
+                        .left {
+                            max-width: 100%;
+
+                            h6 {
+                                font-size: 18px;
+                            }
+
+                            p {
+                                font-size: 14px;
+                                line-height: 200%;
+                            }
+                        }
+
+                        .right {
+                            p {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media (max-width: 600px) {
+        main.Notice {
+            .title {
+                h1 {
+                    font-size: 32px;
+                }
+            }
+
+            .content {
+                width: 80%;
+
+                .navigation {
+                    max-width: 100%;
+                    p {
+                        font-size: 14px;
+                        padding: 4px;
+                    }
+                }
+
+                .noticelist {
+                    .notice {
+                        .left {
+                            h6 {
+                                font-size: 16px;
+                            }
+
+                            p {
+                                font-size: 12px;
+                                line-height: 150%;
+                            }
+                        }
+
+                        .right {
+                            p {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 </style>

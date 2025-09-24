@@ -117,7 +117,7 @@ export default {
                 h1 {
                     color: #FFF;
                     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-                    font-family: "Noto Sans";
+                    font-family: 'Noto Sans TC';
                     font-size: 84px;
                     font-style: normal;
                     font-weight: 700;
@@ -131,7 +131,7 @@ export default {
                     font-family: 'Noto Sans TC';
                     font-size: 24px;
                     font-style: normal;
-                    font-weight: 700;
+                    font-weight: 300;
                     line-height: normal;
                     margin: 0;
                 }
@@ -142,7 +142,7 @@ export default {
                     font-family: 'Noto Sans TC';
                     font-size: 16px;
                     font-style: normal;
-                    font-weight: 700;
+                    font-weight: 300;
                     line-height: normal;
                     margin: 0;
                 }
@@ -174,6 +174,83 @@ export default {
                     border-radius: 10px;
                     background: url('@/assets/Activities/activities02.jpg') center/cover no-repeat;
                     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .activities {
+            .body {
+                flex-direction: column;
+                align-items: center;
+                bottom: 5%;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 30px;
+                width: 50%;
+
+                .body-content {
+                    width: 90%;
+
+                    h1 {
+                        font-size: 48px;
+                    }
+
+                    h5 {
+                        font-size: 20px;
+                    }
+
+                    p {
+                        font-size: 14px;
+                    }
+                }
+
+                .list {
+                    flex-wrap: wrap;
+                    justify-content: center;
+
+                    .card {
+                        width: 150px;
+                        height: 215px;
+                    }
+                }
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        .activities {
+            .body {
+                width: 90%;
+
+                .body-content {
+                    h1 {
+                        font-size: 32px;
+                    }
+
+                    h5 {
+                        font-size: 18px;
+                    }
+
+                    p {
+                        font-size: 12px;
+                    }
+
+                    .btn {
+                        font-size: 18px;
+                        padding: 10px 8px;
+                    }
+                }
+
+                .list {
+                    gap: 20px;
+                    flex-wrap: unset;
+                    overflow-y: auto;
+
+                    .card {
+                        width: 120px;
+                        height: 180px;
+                    }
                 }
             }
         }
