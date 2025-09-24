@@ -13,9 +13,9 @@
 
 ## 🌏 專案簡介｜Project Introduction
 
-LibertyHotel 飯店網站致力於打造現代化的線上訂房與飯店資訊平台，讓使用者能夠輕鬆瀏覽飯店設施、房型介紹、周邊景點與最新公告內容，並能快速查詢空房與預訂房間。設計強調使用者體驗與視覺美感，結合多種技術打造高效且易用的網站介面。
+Liberty Hotel 飯店網站致力於打造現代化的線上訂房與飯店資訊平台，讓使用者能夠輕鬆瀏覽飯店設施、房型介紹、周邊景點與最新公告內容，並能快速查詢空房與預訂房間。設計強調使用者體驗與視覺美感，結合多種技術打造高效且易用的網站介面。
 
-*LibertyHotel's website aims to provide a modern online platform for room booking and hotel information. Users can easily browse hotel facilities, room types, nearby attractions, and the latest announcements, as well as quickly check availability and book rooms. The design emphasizes user experience and visual aesthetics, leveraging multiple technologies to deliver an efficient and user-friendly interface.*
+*Liberty Hotel's website aims to provide a modern online platform for room booking and hotel information. Users can easily browse hotel facilities, room types, nearby attractions, and the latest announcements, as well as quickly check availability and book rooms. The design emphasizes user experience and visual aesthetics, leveraging multiple technologies to deliver an efficient and user-friendly interface.*
 
 ---
 
