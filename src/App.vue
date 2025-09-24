@@ -1,58 +1,15 @@
 <template lang="pug">
 #app
   NavBar
-  #fullpage
-    .section
-      Home/
-    .section
-      Info/
-    .section
-      FacilityServices/
-    .section
-      Roominfo/
-    .section
-      Notice/
-    .section
-      attractionsPage/
-    .section
-      about/
-
+  router-view
 </template>
 
 <script>
-import 'fullpage.js/dist/fullpage.css'
-import fullpage from 'fullpage.js'
-
-import Home from "./components/home.vue";
 import NavBar from "./components/nav.vue";
-import Info from "./components/info.vue";
-import FacilityServices from "./components/FacilityServices.vue";
-import Roominfo from "./components/Roominfo.vue";
-import about from "./components/about.vue";
-import attractionsPage from "./components/attractions.vue";
-import Notice from "./components/Notice.vue";
-
 export default {
   name: 'App',
   components: {
-    Home,
-    NavBar,
-    Info,
-    FacilityServices,
-    Roominfo,
-    about,
-    attractionsPage,
-    Notice
-  },
-  mounted() {
-    new fullpage('#fullpage', {
-      navigation: true,
-      licenseKey: 'gplv3',
-      afterLoad: (origin, destination, direction) => {
-      // destination.index 代表目前 section 的 index
-      this.$root.$emit('sectionChange', destination.index)
-    }
-    })
+    NavBar
   }
 }
 

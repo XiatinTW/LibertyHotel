@@ -35,14 +35,16 @@ div
         placeholder="請選擇入住日與退房日"
         range-separator="－"
         format="YYYY-MM-DD"
+        :disabled-date="disabledDate"
       )
-      button 查詢空房
+      button(@click="goRoomList") 查詢空房
 
 </template>
 
 <script>
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+import roomsData from '@/data/rooms.json';
 export default {
   name: 'HomePage',
   components: { DatePicker },
@@ -52,7 +54,8 @@ export default {
       adults: 2,
       children: 0,
       rooms: 1,
-      dateRange: []
+      dateRange: [],
+      availableDates: []
     }
   },
   watch: {
@@ -66,6 +69,16 @@ export default {
   },
   beforeDestroy() {
     document.removeEventListener('click', this.handleOutsideClick)
+  },
+  created() {
+    // 計算所有房型有空房的日期
+    const dateSet = new Set();
+    roomsData.forEach(room => {
+      room.availability.forEach(a => {
+        if (a.rooms > 0) dateSet.add(a.date);
+      });
+    });
+    this.availableDates = Array.from(dateSet);
   },
   methods: {
     handleOutsideClick(e) {
@@ -87,9 +100,49 @@ export default {
       } else if (type === 'rooms') {
         this.rooms = Math.max(1, this.rooms + delta)
       }
+    },
+    goRoomList() {
+      if (this.dateRange.length === 2) {
+        const formatDate = d => {
+          if (!d) return '';
+          if (typeof d === 'string') return d;
+          if (d instanceof Date) {
+            const yyyy = d.getFullYear();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+          }
+          if (d.format) return d.format('YYYY-MM-DD');
+          return String(d);
+        };
+        const start = formatDate(this.dateRange[0]);
+        const end = formatDate(this.dateRange[1]);
+        this.$router.push({
+          path: '/roomlist',
+          query: {
+            start,
+            end
+          }
+        });
+      } else {
+        alert('請選擇入住日與退房日');
+      }
+    },
+    disabledDate(date) {
+      // date 是原生 Date 物件
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      const d = `${yyyy}-${mm}-${dd}`;
+      return !this.availableDates.includes(d);
     }
-  }
+  },
 
+  disabledDate(date) {
+    const d = date.format('YYYY-MM-DD');
+    console.log('檢查日期:', d, this.availableDates);
+    return !this.availableDates.includes(d);
+  }
 
 }
 </script>
@@ -269,9 +322,13 @@ export default {
           -webkit-box-shadow: none;
           font-size: 16px;
           color: #546980;
+
           &::placeholder {
-            color: #546980;; /* 你可以自訂顏色 */
-            opacity: 1; /* 保持不透明 */
+            color: #546980;
+            ;
+            /* 你可以自訂顏色 */
+            opacity: 1;
+            /* 保持不透明 */
           }
         }
       }
@@ -327,6 +384,7 @@ export default {
         .mx-datepicker-range {
           width: 100%;
         }
+
         .mx-input-wrapper .mx-input {
           text-align: center;
         }
@@ -341,15 +399,18 @@ export default {
   }
 
   @media (max-width: 600px) {
+    .CheckRoom {
+      width: 80vw;
+    }
+
     main.home {
       .hometitle {
-        width: 50vw;
         height: 50vw;
         top: 35%;
       }
 
       .hometext {
-        width: 10vw;
+        width: 50%;
         height: 10vw;
         top: 45%;
       }

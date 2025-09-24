@@ -1,4 +1,5 @@
 <template lang="pug">
+.div
     nav.navbar
         p.navbar-item(:class="{active: activeIndex === 1}", @click="goSection(1)") 關於
         p.navbar-item(:class="{active: activeIndex === 2}", @click="goSection(2)") 設施服務
@@ -7,6 +8,17 @@
         p.navbar-item(:class="{active: activeIndex === 4}", @click="goSection(4)") 公告內容
         p.navbar-item(:class="{active: activeIndex === 5}", @click="goSection(5)") 周邊景點
         p.navbar-item(:class="{active: activeIndex === 6}", @click="goSection(6)") 聯絡我們
+    nav.navbarmedia
+        span.btn(@click="toggleMobileNav")
+        .navbar(v-show="showMobileNav")
+          p.navbar-item(:class="{active: activeIndex === 1}", @click="goSection(1); toggleMobileNav()") 關於
+          p.navbar-item(:class="{active: activeIndex === 2}", @click="goSection(2); toggleMobileNav()") 設施服務
+          p.navbar-item(:class="{active: activeIndex === 3}", @click="goSection(3); toggleMobileNav()") 房型介紹
+          p.navbar-item(:class="{active: activeIndex === 0}", @click="goSection(0); toggleMobileNav()") 首頁
+          p.navbar-item(:class="{active: activeIndex === 4}", @click="goSection(4); toggleMobileNav()") 公告內容
+          p.navbar-item(:class="{active: activeIndex === 5}", @click="goSection(5); toggleMobileNav()") 周邊景點
+          p.navbar-item(:class="{active: activeIndex === 6}", @click="goSection(6); toggleMobileNav()") 聯絡我們
+
 </template>
 
 <script>
@@ -14,7 +26,8 @@ export default {
     name: 'NavBar',
     data() {
         return {
-            activeIndex: 0
+            activeIndex: 0,
+            showMobileNav: false
         }
     },
     mounted() {
@@ -27,6 +40,9 @@ export default {
             if (window.fullpage_api) {
                 window.fullpage_api.moveTo(idx + 1)
             }
+        },
+        toggleMobileNav() {
+            this.showMobileNav = !this.showMobileNav
         }
     }
 }
@@ -86,10 +102,70 @@ export default {
             z-index: -1;
         }
     }
+
     @media (max-width: 768px) {
+        display: none;
+
         .navbar-item {
             width: 70px;
             font-size: 14px;
+        }
+    }
+}
+
+.navbarmedia {
+    display: none;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px 20px;
+    width: 100%;
+    height: 65px;
+    position: absolute;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.25);
+
+    .btn {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        position: relative;
+        margin-right: 30px;
+        background-color: #546980;
+        mask-image: url('src/assets/media.svg');
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+
+        &::after {
+            top: -10px;
+        }
+
+        &::before {
+            bottom: -10px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+    }
+
+    .navbar {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        flex-direction: column;
+        align-items: center;
+
+        .navbar-item.active {
+            &::after {
+                position: absolute;
+                bottom: -14px;
+                width: 125px;
+                height: 55px;
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 35px;
+                z-index: -1;
+            }
         }
     }
 }
