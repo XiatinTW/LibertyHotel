@@ -1,15 +1,15 @@
 <template lang="pug">
     div
         main.activities(:style="{background: `linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(84, 105, 128, 0.65) 60.72%), url('${selectedCard.img}') center/cover no-repeat`} ")
-            .body
-                .body-content
+            .activities__body
+                .activities__body__content
                     h1 {{ selectedCard.title }}
                     h5 {{ selectedCard.subtitle }}
                     p {{ selectedCard.desc }}
                     .btn(@click="openMap") 查看地圖
 
-                .list
-                    .card(
+                .activities__body__list
+                    .activities__body__list__card(
                         v-for="(card, i) in nextCards"
                         :key="card.title"
                         :style="{background: `url('${card.img}') center/cover no-repeat`}"
@@ -98,162 +98,159 @@ export default {
         background-position: center;
         background-repeat: no-repeat;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(84, 105, 128, 0.65) 60.72%), url('@/assets/Activities/activities01.jpg') lightgray 50% / cover no-repeat;
+    }
 
-        .body {
+    .activities__body {
+        display: flex;
+        align-items: flex-end;
+        gap: 90px;
+        position: absolute;
+        bottom: 10%;
+        left: 10%;
+    }
+
+    .activities__body__content {
+        display: flex;
+        width: 650px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+
+        h1 {
+            color: #FFF;
+            text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+            font-family: 'Noto Sans TC';
+            font-size: 84px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin: 0;
+        }
+
+        h5 {
+            color: #FFF;
+            text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+            font-family: 'Noto Sans TC';
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+            margin: 0;
+        }
+
+        p {
+            color: #FFF;
+            text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+            font-family: 'Noto Sans TC';
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+            margin: 0;
+        }
+
+        .btn {
             display: flex;
-            align-items: flex-end;
-            gap: 90px;
-            position: absolute;
-            bottom: 10%;
-            left: 10%;
-
-            .body-content {
-                display: flex;
-                width: 650px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-
-                h1 {
-                    color: #FFF;
-                    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-                    font-family: 'Noto Sans TC';
-                    font-size: 84px;
-                    font-style: normal;
-                    font-weight: 700;
-                    line-height: normal;
-                    margin: 0;
-                }
-
-                h5 {
-                    color: #FFF;
-                    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-                    font-family: 'Noto Sans TC';
-                    font-size: 24px;
-                    font-style: normal;
-                    font-weight: 300;
-                    line-height: normal;
-                    margin: 0;
-                }
-
-                p {
-                    color: #FFF;
-                    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-                    font-family: 'Noto Sans TC';
-                    font-size: 16px;
-                    font-style: normal;
-                    font-weight: 300;
-                    line-height: normal;
-                    margin: 0;
-                }
-
-                .btn {
-                    display: flex;
-                    padding: 15px 10px;
-                    gap: 10px;
-                    border-radius: 10px;
-                    border: 3px solid #FFF;
-                    color: #FFF;
-                    font-family: 'Noto Sans TC';
-                    font-size: 24px;
-                    font-style: normal;
-                    font-weight: 700;
-                    line-height: normal;
-                    cursor: pointer;
-                }
-            }
-
-            .list {
-                display: flex;
-                align-items: center;
-                gap: 36px;
-
-                .card {
-                    width: 220px;
-                    height: 315px;
-                    border-radius: 10px;
-                    background: url('@/assets/Activities/activities02.jpg') center/cover no-repeat;
-                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
-                }
-            }
+            padding: 15px 10px;
+            gap: 10px;
+            border-radius: 10px;
+            border: 3px solid #FFF;
+            color: #FFF;
+            font-family: 'Noto Sans TC';
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            cursor: pointer;
         }
     }
 
-    @media (max-width: 1024px) {
-        .activities {
-            .body {
-                flex-direction: column;
-                align-items: center;
-                bottom: 5%;
-                left: 50%;
-                transform: translateX(-50%);
-                gap: 30px;
-                width: 50%;
+    .activities__body__list {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+    }
 
-                .body-content {
-                    width: 90%;
+    .activities__body__list__card {
+        width: 220px;
+        height: 315px;
+        border-radius: 10px;
+        background: url('@/assets/Activities/activities02.jpg') center/cover no-repeat;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+    }
+}
 
-                    h1 {
-                        font-size: 48px;
-                    }
+@media (max-width: 1024px) {
+    .activities__body {
+        flex-direction: column;
+        align-items: center;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 30px;
+        width: 50%;
+    }
 
-                    h5 {
-                        font-size: 20px;
-                    }
+    .activities__body__content {
+        width: 90%;
 
-                    p {
-                        font-size: 14px;
-                    }
-                }
+        h1 {
+            font-size: 48px;
+        }
 
-                .list {
-                    flex-wrap: wrap;
-                    justify-content: center;
+        h5 {
+            font-size: 20px;
+        }
 
-                    .card {
-                        width: 150px;
-                        height: 215px;
-                    }
-                }
-            }
+        p {
+            font-size: 14px;
         }
     }
-    @media (max-width: 768px) {
-        .activities {
-            .body {
-                width: 90%;
 
-                .body-content {
-                    h1 {
-                        font-size: 32px;
-                    }
+    .activities__body__list {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-                    h5 {
-                        font-size: 18px;
-                    }
+    .activities__body__list__card {
+        width: 150px;
+        height: 215px;
+    }
+}
 
-                    p {
-                        font-size: 12px;
-                    }
+@media (max-width: 768px) {
+    .activities__body {
+        width: 90%;
+    }
 
-                    .btn {
-                        font-size: 18px;
-                        padding: 10px 8px;
-                    }
-                }
-
-                .list {
-                    gap: 20px;
-                    flex-wrap: unset;
-                    overflow-y: auto;
-
-                    .card {
-                        width: 120px;
-                        height: 180px;
-                    }
-                }
-            }
+    .activities__body__content {
+        h1 {
+            font-size: 32px;
         }
+
+        h5 {
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+
+        .btn {
+            font-size: 18px;
+            padding: 10px 8px;
+        }
+    }
+
+    .activities__body__list {
+        gap: 20px;
+        flex-wrap: unset;
+        overflow-y: auto;
+    }
+
+    .activities__body__list__card {
+        width: 120px;
+        height: 180px;
     }
 }
 </style>

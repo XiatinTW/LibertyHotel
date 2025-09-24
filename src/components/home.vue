@@ -1,33 +1,33 @@
 <template lang="pug">
 div
   main.home
-    span.hometitle
-    span.hometext
+    span.home__title
+    span.home__text
   .CheckRoom
-    .body
+    .check-room__body
       // 人數/房間選擇器
-      div.person-room-selector(@click="showSelector = true")
+      .check-room__person-selector(@click="showSelector = true")
         span
           | {{ adults }} 位成人 · {{ children }} 位孩童 · {{ rooms }} 間房
-        i.arrow-down
+        i.check-room__person-selector_arrow-down
       // 彈出選單
-      div.selector-popup(v-if="showSelector", @click.stop)
-        .selector-row
+      .check-room__body_selector-popup(v-if="showSelector", @click.stop)
+        .check-room__body_selector-popup_selector-row
           span 標籤 成人
           button(@click="change('adults', -1)", :disabled="adults <= 1") -
           span {{ adults }}
           button(@click="change('adults', 1)") +
-        .selector-row
+        .check-room__body_selector-popup_selector-row
           span 標籤 孩童
           button(@click="change('children', -1)", :disabled="children <= 0") -
           span {{ children }}
           button(@click="change('children', 1)") +
-        .selector-row
+        .check-room__body_selector-popup_selector-row
           span 標籤 客房
           button(@click="change('rooms', -1)", :disabled="rooms <= 1") -
           span {{ rooms }}
           button(@click="change('rooms', 1)") +
-        .selector-actions
+        .check-room__body_selector-popup_selector-actions
           button(@click="showSelector = false") 完成
       DatePicker(
         v-model="dateRange"
@@ -37,7 +37,7 @@ div
         format="YYYY-MM-DD"
         :disabled-date="disabledDate"
       )
-      button(@click="goRoomList") 查詢空房
+      button.check-room__body_btn(@click="goRoomList") 查詢空房
 
 </template>
 
@@ -45,6 +45,7 @@ div
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import roomsData from '@/data/rooms.json';
+import { mapActions } from 'vuex';
 export default {
   name: 'HomePage',
   components: { DatePicker },
@@ -65,6 +66,10 @@ export default {
       } else {
         document.removeEventListener('click', this.handleOutsideClick)
       }
+    },
+    dateRange(val) {
+      // 日期選擇時同步到 Vuex
+      this.updateDateRange(val);
     }
   },
   beforeDestroy() {
@@ -81,6 +86,7 @@ export default {
     this.availableDates = Array.from(dateSet);
   },
   methods: {
+    ...mapActions(['updateDateRange']),
     handleOutsideClick(e) {
       const popup = document.querySelector('.selector-popup');
       const selector = document.querySelector('.person-room-selector');
@@ -103,6 +109,8 @@ export default {
     },
     goRoomList() {
       if (this.dateRange.length === 2) {
+        // 查詢前同步到 Vuex
+        this.updateDateRange(this.dateRange);
         const formatDate = d => {
           if (!d) return '';
           if (typeof d === 'string') return d;
@@ -119,10 +127,7 @@ export default {
         const end = formatDate(this.dateRange[1]);
         this.$router.push({
           path: '/roomlist',
-          query: {
-            start,
-            end
-          }
+          // 不再需要 query，直接跳轉即可
         });
       } else {
         alert('請選擇入住日與退房日');
@@ -136,37 +141,36 @@ export default {
       const d = `${yyyy}-${mm}-${dd}`;
       return !this.availableDates.includes(d);
     }
-  },
-
-  disabledDate(date) {
-    const d = date.format('YYYY-MM-DD');
-    console.log('檢查日期:', d, this.availableDates);
-    return !this.availableDates.includes(d);
   }
-
 }
 </script>
 
 <style lang="scss">
 #app {
+  @mixin flex_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @mixin flex_center_space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   main.home {
-    display: flex;
+    @include flex_center;
     width: 100vw;
     height: 100vh;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     position: relative;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('@/assets/background.jpg');
-    will-change: background-image;
-    /* 將 background.jpg 壓縮優化 */
   }
 
-  .hometitle {
+  .home__title {
     display: block;
     width: min(70vh, 70vw);
     height: min(70vh, 70vw);
@@ -180,7 +184,7 @@ export default {
     background-position: center;
   }
 
-  .hometext {
+  .home__text {
     display: block;
     width: min(15vh, 15vw);
     height: min(15vh, 15vw);
@@ -207,160 +211,150 @@ export default {
     left: 50%;
     bottom: 40px;
     transform: translateX(-50%);
+  }
 
-    .body {
-      display: flex;
-      width: 100vh;
-      padding: 10px 13px;
-      align-items: center;
-      flex: 1 0 0;
-      align-self: stretch;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(6px);
-      justify-content: space-between;
+  .check-room__body {
+    @include flex_center_space-between;
+    width: 100vh;
+    padding: 10px 13px;
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+  }
 
-      .person-room-selector {
-        display: flex;
-        align-items: center;
-        border-radius: 8px;
-        justify-content: space-between;
-        padding: 8px 18px;
-        cursor: pointer;
-        font-size: 16px;
+  .check-room__person-selector {
+    @include flex_center_space-between;
+    border-radius: 8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #546980;
+    min-width: 260px;
+    position: relative;
+    margin-right: 20px;
+  }
+
+  .check-room__person-selector_arrow-down {
+    border: solid #888;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    margin-left: 8px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+  .check-room__body_selector-popup {
+    position: absolute;
+    bottom: 70px;
+    left: 10px;
+    z-index: 10;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    padding: 24px 32px 16px 32px;
+    min-width: 240px;
+  }
+
+  .check-room__body_selector-popup_selector-row {
+    @include flex_center_space-between;
+    margin-bottom: 18px;
+
+    span {
+      text-align: center;
+      font-size: 16px;
+    }
+
+    button {
+      max-width: 32px;
+      max-height: 32px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background: #f7f7f7;
+      font-size: 20px;
+      color: #333;
+      margin: 0 8px;
+
+      &:disabled {
+        color: #bbb;
+        border-color: #eee;
+        background: #fafafa;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .check-room__body_selector-popup_selector-actions {
+    display: flex;
+    justify-content: center;
+
+    button {
+      border-radius: 8px;
+      border: 1px solid #546980;
+      background: #fff;
+      color: #546980;
+      font-size: 16px;
+      padding: 6px 24px;
+      cursor: pointer;
+
+      &:hover {
+        background: #f0f8ff;
+      }
+    }
+  }
+
+  .mx-input-wrapper {
+    @include flex_center;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    gap: 10px;
+    flex: 1 0 0;
+
+    .mx-input {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      font-size: 16px;
+      color: #546980;
+
+      &::placeholder {
         color: #546980;
-        min-width: 260px;
-        position: relative;
-        margin-right: 20px;
+        ;
+        /* 你可以自訂顏色 */
+        opacity: 1;
+        /* 保持不透明 */
       }
+    }
+  }
 
-      .arrow-down {
-        border: solid #888;
-        border-width: 0 2px 2px 0;
-        display: inline-block;
-        padding: 4px;
-        margin-left: 8px;
-        transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
-      }
+  .check-room__body_btn {
+    @include flex_center;
+    width: 100%;
+    height: 100%;
+    max-width: 212px;
+    max-height: 75px;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.75);
 
-      .selector-popup {
-        position: absolute;
-        bottom: 70px;
-        left: 10px;
-        z-index: 10;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
-        padding: 24px 32px 16px 32px;
-        min-width: 240px;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #546980;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 
-        .selector-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 18px;
-
-          span {
-            text-align: center;
-            font-size: 16px;
-          }
-
-          button {
-            max-width: 32px;
-            max-height: 32px;
-            border-radius: 50%;
-            border: 1px solid #ccc;
-            background: #f7f7f7;
-            font-size: 20px;
-            color: #333;
-            margin: 0 8px;
-
-            &:disabled {
-              color: #bbb;
-              border-color: #eee;
-              background: #fafafa;
-              cursor: not-allowed;
-            }
-          }
-        }
-
-        .selector-actions {
-          display: flex;
-          justify-content: center;
-
-          button {
-            border-radius: 8px;
-            border: 1px solid #546980;
-            background: #fff;
-            color: #546980;
-            font-size: 16px;
-            padding: 6px 24px;
-            cursor: pointer;
-
-            &:hover {
-              background: #f0f8ff;
-            }
-          }
-        }
-      }
-
-      .mx-input-wrapper {
-        display: flex;
-        padding: 10px;
-        border: none;
-        background: transparent;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        flex: 1 0 0;
-
-        .mx-input {
-          background: transparent;
-          border: none;
-          box-shadow: none;
-          -webkit-box-shadow: none;
-          font-size: 16px;
-          color: #546980;
-
-          &::placeholder {
-            color: #546980;
-            ;
-            /* 你可以自訂顏色 */
-            opacity: 1;
-            /* 保持不透明 */
-          }
-        }
-      }
-
-      button {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        max-width: 212px;
-        max-height: 75px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        flex: 1 0 0;
-        align-self: stretch;
-        border-radius: 10px;
-        border: none;
-        background: rgba(255, 255, 255, 0.75);
-
-        font-family: 'Noto Sans TC', sans-serif;
-        color: #546980;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-
-        &:hover {
-          cursor: pointer;
-          background: rgba(255, 255, 255, 0.9);
-        }
-      }
+    &:hover {
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.9);
     }
   }
 
@@ -369,32 +363,32 @@ export default {
       width: 90vw;
       height: 20%;
       bottom: 20px;
+    }
 
-      .body {
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
+    .check-room__body {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
 
-        .person-room-selector {
-          margin-right: 0;
-          width: 100%;
-          justify-content: center;
-        }
+    .check-room__person-selector {
+      margin-right: 0;
+      width: 100%;
+      justify-content: center;
+    }
 
-        .mx-datepicker-range {
-          width: 100%;
-        }
+    .mx-datepicker-range {
+      width: 100%;
+    }
 
-        .mx-input-wrapper .mx-input {
-          text-align: center;
-        }
+    .mx-input-wrapper .mx-input {
+      text-align: center;
+    }
 
-        button {
-          max-width: none;
-          height: 20%;
-          width: 100%;
-        }
-      }
+    .check-room__body_btn {
+      max-width: none;
+      height: 20%;
+      width: 100%;
     }
   }
 
@@ -403,17 +397,15 @@ export default {
       width: 80vw;
     }
 
-    main.home {
-      .hometitle {
-        height: 50vw;
-        top: 35%;
-      }
+    .home__title {
+      height: 50vw;
+      top: 35%;
+    }
 
-      .hometext {
-        width: 50%;
-        height: 10vw;
-        top: 45%;
-      }
+    .home__text {
+      width: 50%;
+      height: 10vw;
+      top: 45%;
     }
   }
 }

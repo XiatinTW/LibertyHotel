@@ -3,12 +3,12 @@
         main.Roominfo
             img(:src="roominfolist[currentIndex].img" :alt="roominfolist[currentIndex].name")
 
-            .FacilityText(v-if="roominfolist.length > 0")
+            .Roominfo__FacilityText(v-if="roominfolist.length > 0")
                 h2 {{ roominfolist[currentIndex].name }}
                 h5 {{ roominfolist[currentIndex].subtitle }}
                 p {{ roominfolist[currentIndex].text }}
 
-                .selecttool
+                .Roominfo__FacilityText__selecttool
                     .btn(v-for="(item, idx) in roominfolist" :key="item.name" :class="{active: idx === currentIndex}" @click="currentIndex = idx")
                         p(v-if="item.name === '雙人房'")
                             | 雙人房
@@ -49,73 +49,73 @@ export default {
             flex-shrink: 0;
             object-fit: cover;
         }
+    }
 
-        .FacilityText {
-            position: relative;
+    .Roominfo__FacilityText {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 25px;
+        width: 50%;
+
+        h2 {
+            color: #546980;
+            font-family: "Noto Sans TC";
+            font-size: 64px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 135%;
+            margin: 0;
+            margin-top: 40px;
+        }
+
+        h5 {
+            color: #546980;
+            font-family: "Noto Sans TC";
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 135%;
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #546980;
+            font-family: "Noto Sans TC";
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 135%;
+            max-width: 550px;
+            margin: 0;
+        }
+    }
+
+    .Roominfo__FacilityText__selecttool {
+        display: inline-flex;
+        padding: 25px 0px;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        border-radius: 10px 0 0 10px;
+        background: rgba(84, 105, 128, 0.15);
+        position: absolute;
+        right: 0;
+        top: 30%;
+
+        .btn {
             display: flex;
-            flex-direction: column;
-            padding: 25px;
-            width: 50%;
+            max-width: 66px;
+            padding: 5px 15px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
 
-            h2 {
-                color: #546980;
-                font-family: "Noto Sans TC";
-                font-size: 64px;
-                font-style: normal;
-                font-weight: 700;
-                line-height: 135%;
-                margin: 0;
-                margin-top: 40px;
-            }
-
-            h5 {
-                color: #546980;
-                font-family: "Noto Sans TC";
-                font-size: 24px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 135%;
-                margin: 0;
-                margin-bottom: 20px;
-            }
-
-            p {
-                color: #546980;
-                font-family: "Noto Sans TC";
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 135%;
-                max-width: 550px;
-                margin: 0;
-            }
-
-            .selecttool {
-                display: inline-flex;
-                padding: 25px 0px;
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-                border-radius: 10px 0 0 10px;
-                background: rgba(84, 105, 128, 0.15);
-                position: absolute;
-                right: 0;
-                top: 30%;
-
-                .btn {
-                    display: flex;
-                    max-width: 66px;
-                    padding: 5px 15px;
-                    justify-content: center;
-                    align-items: center;
-                    gap: 10px;
-
-                    &:hover {
-                        border-radius: 10px;
-                        background: rgba(255, 255, 255, 0.45);
-                        cursor: pointer;
-                    }
-                }
+            &:hover {
+                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.45);
+                cursor: pointer;
             }
         }
     }
@@ -126,53 +126,55 @@ export default {
             height: 100vh;
             overflow-x: hidden;
 
-            img, .FacilityText {
+            img {
                 width: 100%;
                 max-width: 100%;
                 height: 50%;
             }
 
-            .FacilityText {
-                width: 90%;
-                height: 50%;
-                padding: 25px 45px;
+        }
 
-                h2 {
-                    font-size: 32px;
-                    margin-top: 20px;
-                }
+        .Roominfo__FacilityText {
+            width: 90%;
+            height: 50%;
+            padding: 25px 45px;
+            max-width: 100%;
 
-                h5 {
-                    font-size: 18px;
-                    margin-bottom: 10px;
-                }
+            h2 {
+                font-size: 32px;
+                margin-top: 20px;
+            }
 
-                p {
-                    font-size: 14px;
-                    max-width: 100%;
-                }
+            h5 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
 
-                .selecttool {
-                    top: auto;
-                    bottom: 10px;
-                    right: 50%;
-                    transform: translateX(50%);
-                    padding: 10px 15px;
-                    flex-direction: row;
-                    background: rgba(84, 105, 128, 0.15);
-                    border-radius: 10px;
+            p {
+                font-size: 14px;
+                max-width: 100%;
+            }
+        }
 
-                    .btn {
-                        max-width: none;
-                        padding: 5px 10px;
-                    }
-                }
+        .Roominfo__FacilityText__selecttool {
+            top: auto;
+            bottom: 10px;
+            right: 50%;
+            transform: translateX(50%);
+            padding: 10px 15px;
+            flex-direction: row;
+            background: rgba(84, 105, 128, 0.15);
+            border-radius: 10px;
+
+            .btn {
+                max-width: none;
+                padding: 5px 10px;
             }
         }
     }
 
     @media (max-width: 768px) {
-         .Roominfo .FacilityText {
+        .Roominfo__FacilityText {
             padding: 15px 25px;
 
             h2 {
@@ -189,19 +191,20 @@ export default {
                 font-size: 12px;
             }
 
-            .selecttool {
-                bottom: 15px;
-                padding: 8px 10px;
-                gap: 8px;
-                width: 100%;
-                justify-content: center;
+        }
 
-                .btn {
-                    padding: 3px 8px;
+        .Roominfo__FacilityText__selecttool {
+            bottom: 15px;
+            padding: 8px 10px;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
 
-                    p {
-                        font-size: 12px;
-                    }
+            .btn {
+                padding: 3px 8px;
+
+                p {
+                    font-size: 12px;
                 }
             }
         }

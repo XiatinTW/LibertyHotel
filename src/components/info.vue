@@ -1,9 +1,9 @@
 <template lang="pug">
 div
   main.info
-    .title
+    .info__title
       h1 關於 LibertyHotel
-    .text
+    .info__text
       p 在一個充滿規則與拘束的世界，我們夢想創造一個真正自由、無拘無束的空間，
         | 讓每位旅人都能在這裡找到內心的平靜。
       p LibertyHotel 的誕生，正是基於這個簡單而強烈的理念。
@@ -27,36 +27,41 @@ export default {
 
 <style lang="scss">
 #app {
+  @mixin flex_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   main.info {
-    display: flex;
+    @include flex_center;
     width: 100vw;
     min-height: 100vh;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 12px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('src/assets/backgroud2.jpg');
     will-change: background-image;
+  }
 
-    .title {
-      margin-top: 100px;
+  .info__title {
+    margin-top: 100px;
 
-      h1 {
-        color: #546980;
-        text-align: center;
-        font-size: 96px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-        margin: 0;
-        font-family: 'Noto Sans TC';
-      }
+    h1 {
+      color: #546980;
+      text-align: center;
+      font-size: 96px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      margin: 0;
+      font-family: 'Noto Sans TC';
     }
+  }
 
+  .info__text {
     p {
       color: #546980;
       font-size: 16px;
@@ -65,35 +70,41 @@ export default {
       line-height: 400%;
       font-family: 'Noto Sans TC';
     }
+  }
 
 
-    @media (max-width: 1024px) {
-      .title {
-        h1 {
-          font-size: 48px;
-        }
-      }
-      .text {
-        max-width: 70%;
-        p {
-          font-size: 14px;
-          line-height: 200%;
-        }
+  @media (max-width: 1024px) {
+    .info__title {
+      h1 {
+        font-size: 48px;
       }
     }
-    @media (max-width: 768px) {
-      .title {
-        margin-top: 50px;
-        h1 {
-          font-size: 32px;
-        }
+
+    .info__text {
+      max-width: 70%;
+
+      p {
+        font-size: 14px;
+        line-height: 200%;
       }
-      .text {
-        max-width: 90%;
-        p {
-          font-size: 12px;
-          line-height: 150%;
-        }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .info__title {
+      margin-top: 50px;
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+
+    .info__text {
+      max-width: 90%;
+
+      p {
+        font-size: 12px;
+        line-height: 150%;
       }
     }
   }

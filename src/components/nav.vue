@@ -10,7 +10,7 @@
         p.navbar-item(:class="{active: activeIndex === 6}", @click="goSection(6)") 聯絡我們
     nav.navbarmedia
         span.btn(@click="toggleMobileNav")
-        .navbar(v-show="showMobileNav")
+        .navbarmedia__navbar(v-show="showMobileNav")
           p.navbar-item(:class="{active: activeIndex === 1}", @click="goSection(1); toggleMobileNav()") 關於
           p.navbar-item(:class="{active: activeIndex === 2}", @click="goSection(2); toggleMobileNav()") 設施服務
           p.navbar-item(:class="{active: activeIndex === 3}", @click="goSection(3); toggleMobileNav()") 房型介紹
@@ -40,6 +40,16 @@ export default {
             if (window.fullpage_api) {
                 window.fullpage_api.moveTo(idx + 1)
             }
+            // 如果點擊首頁且不在首頁路由，先導航到首頁再跳轉到第一頁
+            if (idx === idx) {
+                this.$router.push('/').then(() => {
+                    this.$nextTick(() => {
+                        if (window.fullpage_api) window.fullpage_api.moveTo(idx + 1);
+                    });
+                });
+            } else {
+                if (window.fullpage_api) window.fullpage_api.moveTo(idx + 1);
+            }
         },
         toggleMobileNav() {
             this.showMobileNav = !this.showMobileNav
@@ -49,45 +59,44 @@ export default {
 </script>
 
 <style lang="scss">
-.navbar {
+@mixin nav {
     display: flex;
-    width: 100%;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(6px);
-    gap: 10px;
     position: absolute;
     top: 0;
     z-index: 10;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    width: 100%;
+    gap: 10px;
+}
 
-    .navbar-item {
-        color: #546980;
-        color: #546980;
-        display: flex;
-        width: 100px;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        z-index: 1;
+@mixin nav__item-after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    width: 135px;
+    height: 135px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 35px;
+    z-index: -1;
+}
 
-        &:hover {
-            cursor: pointer;
-            position: relative;
+.navbar {
+    @include nav;
+}
 
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: -14px;
-                width: 135px;
-                height: 135px;
-                background: rgba(255, 255, 255, 0.4);
-                border-radius: 35px;
-                z-index: -1;
-            }
-        }
-    }
+.navbar-item {
+    color: #546980;
+    color: #546980;
+    display: flex;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
 
-    .navbar-item.active {
+    &:hover {
         cursor: pointer;
         position: relative;
 
@@ -102,14 +111,14 @@ export default {
             z-index: -1;
         }
     }
+}
 
-    @media (max-width: 768px) {
-        display: none;
+.navbar-item.active {
+    cursor: pointer;
+    position: relative;
 
-        .navbar-item {
-            width: 70px;
-            font-size: 14px;
-        }
+    &::after {
+        @include nav__item-after;
     }
 }
 
@@ -144,28 +153,39 @@ export default {
             bottom: -10px;
         }
     }
+}
 
-    @media (max-width: 768px) {
-        display: flex;
+@media (max-width: 768px) {
+    .navbar {
+        display: none;
     }
 
-    .navbar {
-        display: flex;
-        width: 100%;
-        height: 100vh;
-        flex-direction: column;
-        align-items: center;
+    .navbar-item {
+        width: 70px;
+        font-size: 14px;
+    }
+}
 
-        .navbar-item.active {
-            &::after {
-                position: absolute;
-                bottom: -14px;
-                width: 125px;
-                height: 55px;
-                background: rgba(255, 255, 255, 0.4);
-                border-radius: 35px;
-                z-index: -1;
-            }
+
+@media (max-width: 768px) {
+    .navbarmedia {
+        display: flex;
+    }
+}
+
+.navbarmedia__navbar {
+    @include nav;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+
+    .navbar-item.active {
+        &::after {
+            @include nav__item-after;
+            width: 125px;
+            height: 55px;
         }
     }
 }
