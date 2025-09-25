@@ -110,17 +110,17 @@ export default {
         };
     },
     computed: {
-           ...mapGetters(['dateRange', 'displayDate']),
-           totalPrice() {
-              if (!this.selectedRoom || !this.startDate || !this.endDate) return 0;
-              const price = this.selectedRoom.price || 0;
-              const count = this.selectedCount || 1;
-              // 計算天數（入住日到退房日，退房日不算一天）
-              const start = new Date(this.startDate);
-              const end = new Date(this.endDate);
-              const days = Math.max(1, Math.round((end - start) / (1000 * 60 * 60 * 24)));
-              return price * count * days;
-           },
+        ...mapGetters(['dateRange', 'displayDate']),
+        totalPrice() {
+            if (!this.selectedRoom || !this.startDate || !this.endDate) return 0;
+            const price = this.selectedRoom.price || 0;
+            const count = this.selectedCount || 1;
+            // 計算天數（入住日到退房日，退房日不算一天）
+            const start = new Date(this.startDate);
+            const end = new Date(this.endDate);
+            const days = Math.max(1, Math.round((end - start) / (1000 * 60 * 60 * 24)));
+            return price * count * days;
+        },
     },
     watch: {
         dateRange: {
@@ -148,14 +148,14 @@ export default {
     },
     methods: {
         ...mapMutations(['setDateRange']),
-            formatDate(date) {
-                if (!date) return '';
-                const d = new Date(date);
-                const yyyy = d.getFullYear();
-                const mm = String(d.getMonth() + 1).padStart(2, '0');
-                const dd = String(d.getDate()).padStart(2, '0');
-                return `${yyyy}-${mm}-${dd}`;
-            },
+        formatDate(date) {
+            if (!date) return '';
+            const d = new Date(date);
+            const yyyy = d.getFullYear();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        },
         filterRooms() {
             // 只顯示入住到退房日期區間都可入住的房型
             if (!this.startDate || !this.endDate) {
@@ -224,14 +224,14 @@ export default {
             }
         },
         selectRoom(room) {
-              this.selectedRoom = room;
-              this.selectedCount = 1;
-              // 如果是推薦房型，帶入推薦日期
-              if (room.suggestStart && room.suggestEnd) {
-                 this.startDate = room.suggestStart;
-                 this.endDate = room.suggestEnd;
-              }
-              this.step = 2;
+            this.selectedRoom = room;
+            this.selectedCount = 1;
+            // 如果是推薦房型，帶入推薦日期
+            if (room.suggestStart && room.suggestEnd) {
+                this.startDate = room.suggestStart;
+                this.endDate = room.suggestEnd;
+            }
+            this.step = 2;
         },
         confirmOrder() {
             // 可在此送出資料到後端
@@ -252,374 +252,597 @@ body {
 
 #app {
     background: white;
+}
 
-    main.roomlist {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        min-height: 100vh;
-        background: white;
-        padding-bottom: 34px;
+main.roomlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    background: white;
+    padding-bottom: 34px;
+}
+
+.roomlist__title {
+    display: flex;
+    height: 30%;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("@/assets/background.jpg");
+    will-change: background-image;
+
+    h1 {
+        color: rgba(255, 255, 255, 0.75);
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        font-size: 84px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        font-family: "Noto Sans TC";
     }
+}
 
-    .roomlist__title {
+.rl__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100vh;
+    height: 100%;
+    padding: 0px var(--Layout-x);
+    gap: 30px;
+    margin: 32px 0px;
+    background: #fff;
+    border-radius: 12px;
+
+    &__process {
         display: flex;
-        height: 30%;
-        flex-direction: column;
+        align-self: stretch;
+        padding: 12px 0;
+        justify-content: center;
         align-items: center;
-        gap: 64px;
-        width: 100%;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-image: url("@/assets/background.jpg");
-        will-change: background-image;
-
-        h1 {
-            color: rgba(255, 255, 255, 0.75);
-            text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-            font-size: 84px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            font-family: "Noto Sans TC";
-        }
-    }
-
-
-
-    .rl__content {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100vh;
-        height: 100%;
-        padding: 0px var(--Layout-x);
-        gap: 30px;
-        margin: 32px 0px;
-        background: #fff;
+        gap: 10px;
+        background: #f7faff;
         border-radius: 12px;
+        box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.08);
 
-        &__process {
-            display: flex;
-            align-self: stretch;
-            padding: 12px 0;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            background: #f7faff;
-            border-radius: 12px;
-            box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.08);
+        span {
+            color: #54698071;
+            text-align: center;
+            font-family: "Noto Sans TC";
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%;
+            padding: 0 8px;
+            transition: color 0.2s, font-weight 0.2s;
+        }
 
-            span.step {
-                color: #54698071;
-                text-align: center;
-                font-family: "Noto Sans TC";
-                font-size: 18px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: 135%;
-                padding: 0 8px;
-                transition: color 0.2s, font-weight 0.2s;
-            }
+        span.active {
+            color: #546980;
+            font-weight: 700;
+            border-bottom: 2px solid #546980;
+        }
 
-            span.step.active {
-                color: #546980;
-                font-weight: 700;
-                border-bottom: 2px solid #546980;
-            }
+        span.arrow {
+            color: #b0b8c1;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 0 4px;
+        }
+    }
 
-            span.arrow {
-                color: #b0b8c1;
-                font-size: 18px;
-                font-weight: 700;
-                padding: 0 4px;
+    &__date-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+
+        h2 {
+            color: #546980;
+            font-size: 32px;
+            font-family: "Noto Sans TC";
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        span {
+            color: #546980;
+            font-size: 16px;
+            font-family: "Noto Sans TC";
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+    }
+
+}
+
+
+.rl__content__list {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 25px;
+
+    &__room-card {
+        display: flex;
+        flex-direction: row;
+        background: #fff;
+        border: 1.5px solid #546980;
+        border-radius: 12px;
+        padding: 24px;
+        gap: 24px;
+        min-width: 500px;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(84, 105, 128, 0.08);
+
+        &__img {
+            width: 50%;
+            height: 30vh;
+            overflow: hidden;
+            border-radius: 8px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         }
 
-        &__date-info {
+        &__info {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            width: 100%;
 
-            h2 {
+            h3 {
                 color: #546980;
-                font-size: 32px;
+                font-size: 24px;
                 font-family: "Noto Sans TC";
                 font-weight: 500;
-                margin-bottom: 24px;
+                margin: 0;
             }
 
-            span {
+            ul {
+                margin: 0;
+                padding-left: 18px;
                 color: #546980;
                 font-size: 16px;
                 font-family: "Noto Sans TC";
                 font-weight: 400;
-                margin-bottom: 24px;
+            }
+
+            &__price {
+                margin-top: 12px;
+
+                .price {
+                    color: #546980;
+                    font-size: 32px;
+                    font-weight: 700;
+                }
+            }
+
+            &__qty {
+                color: #546980;
+                font-size: 16px;
+                font-family: "Noto Sans TC";
+                font-weight: 400;
+            }
+
+            &__btn {
+                margin-top: 16px;
+                background: #546980;
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 32px;
+                font-size: 20px;
+                font-family: "Noto Sans TC";
+                cursor: pointer;
+                transition: background 0.2s;
+
+                &:hover {
+                    background: #3a4c5e;
+                }
+            }
+        }
+    }
+}
+
+.rl__c__two {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 50%;
+    background: #fff;
+    border: 1.5px solid #546980;
+    border-radius: 12px;
+    gap: 24px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(84, 105, 128, 0.08);
+}
+
+.rl__c__two__order {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+
+    &__left {
+        width: 50%;
+        padding: 25px;
+
+        &__img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 100%;
+                height: 20%;
+                border-radius: 8px;
+                object-fit: cover;
+                margin: 16px 0;
             }
         }
 
+        &__row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            color: #546980;
+            font-family: "Noto Sans TC";
+            border-bottom: 1px solid #546980;
+            padding: 8px 0;
+        }
+
+        &_row:last-child {
+            border-bottom: none;
+            font-size: 22px;
+        }
+
+        ul {
+            margin: 8px 0 0 0;
+            padding-left: 18px;
+            color: #546980;
+            font-size: 16px;
+            font-family: "Noto Sans TC";
+            font-weight: 400;
+            margin-left: 10px;
+        }
     }
 
+    &__right {
+        width: 50%;
+        padding: 25px;
+
+        &__row {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 20px;
+            color: #546980;
+            font-family: "Noto Sans TC";
+            border-bottom: 1px solid #546980;
+            padding: 8px 0;
+
+            input {
+                width: 15%;
+                padding: 8px;
+                margin-top: 6px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 18px;
+                color: #546980;
+                font-family: "Noto Sans TC";
+                box-sizing: border-box;
+            }
+        }
+
+        &__row:last-child {
+            border-bottom: none;
+            font-size: 22px;
+        }
+
+        &__form {
+            margin: 10px 0px;
+
+            span {
+                font-size: 20px;
+                color: #546980;
+                font-family: "Noto Sans TC";
+            }
+
+            input {
+                width: 100%;
+                padding: 8px;
+                margin-top: 6px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 18px;
+                color: #546980;
+                font-family: "Noto Sans TC";
+                box-sizing: border-box;
+            }
+        }
+    }
+}
+
+.confirm-btn {
+    width: 100%;
+    background: #546980;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 0;
+    font-size: 22px;
+    font-family: "Noto Sans TC";
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #3a4c5e;
+    }
+}
+
+.order-area {
+    h3 {
+        color: #546980;
+        text-align: center;
+        font-family: "Noto Sans TC";
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 135%;
+    }
+}
+
+.no-room-msg {
+    width: 100%;
+    color: #54698090;
+    text-align: center;
+    font-family: "Noto Sans TC";
+    font-size: 40px;
+}
+
+.recommend-title {
+    width: 100%;
+    color: #546980;
+    font-family: "Noto Sans TC";
+    font-size: 40px;
+}
+
+@media (max-width: 1024px) {
+    main.roomlist {
+        width: 100%;
+    }
+
+    .roomlist__title {
+        h1 {
+            font-size: 48px;
+        }
+    }
+
+    .rl__content {
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
+        padding: 0px 25px;
+        gap: 20px;
+        margin: 16px 0px;
+
+        &__date-info {
+            align-items: center;
+
+            h2 {
+                font-size: 24px;
+                margin-bottom: 16px;
+            }
+
+            span {
+                font-size: 14px;
+                margin-bottom: 16px;
+            }
+        }
+    }
 
     .rl__content__list {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        flex-direction: column;
-        gap: 25px;
+        gap: 20px;
 
         &__room-card {
-            display: flex;
-            flex-direction: row;
-            background: #fff;
-            border: 1.5px solid #546980;
-            border-radius: 12px;
-            padding: 24px;
-            gap: 24px;
-            min-width: 500px;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(84, 105, 128, 0.08);
+            min-width: unset;
+            height: auto;
+            width: 100%;
+            max-width: 80%;
+            align-self: center;
 
             &__img {
-                width: 50%;
-                height: 30vh;
-                overflow: hidden;
-                border-radius: 8px;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
+                height: 25vh;
             }
 
             &__info {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-
                 h3 {
-                    color: #546980;
-                    font-size: 24px;
-                    font-family: "Noto Sans TC";
-                    font-weight: 500;
-                    margin: 0;
+                    font-size: 20px;
                 }
 
                 ul {
-                    margin: 0;
-                    padding-left: 18px;
-                    color: #546980;
-                    font-size: 16px;
-                    font-family: "Noto Sans TC";
-                    font-weight: 400;
+                    font-size: 14px;
                 }
 
                 &__price {
-                    margin-top: 12px;
-
                     .price {
-                        color: #546980;
-                        font-size: 32px;
-                        font-weight: 700;
+                        font-size: 24px;
                     }
                 }
 
                 &__qty {
-                    color: #546980;
-                    font-size: 16px;
-                    font-family: "Noto Sans TC";
-                    font-weight: 400;
+                    font-size: 14px;
                 }
 
                 &__btn {
-                    margin-top: 16px;
-                    background: #546980;
-                    color: #fff;
-                    border: none;
-                    border-radius: 6px;
-                    padding: 8px 32px;
-                    font-size: 20px;
-                    font-family: "Noto Sans TC";
-                    cursor: pointer;
-                    transition: background 0.2s;
-
-                    &:hover {
-                        background: #3a4c5e;
-                    }
+                    font-size: 18px;
+                    padding: 6px 24px;
                 }
             }
         }
     }
 
     .rl__c__two {
-        display: flex;
-        flex-direction: column;
+        min-width: unset;
         width: 100%;
-        min-width: 50%;
-        background: #fff;
-        border: 1.5px solid #546980;
-        border-radius: 12px;
-        gap: 24px;
-        align-items: center;
-        box-shadow: 0 2px 8px rgba(84, 105, 128, 0.08);
-    }
 
-    .rl__c__two__order {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        justify-content: space-between;
-        flex-direction: row;
+        &__order {
 
-        &__left {
-            width: 50%;
-            padding: 25px;
-
-            &__img {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                img {
-                    width: 100%;
-                    height: 20%;
-                    border-radius: 8px;
-                    object-fit: cover;
-                    margin: 16px 0;
-                }
-            }
-
-            &__row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 20px;
-                color: #546980;
-                font-family: "Noto Sans TC";
-                border-bottom: 1px solid #546980;
-                padding: 8px 0;
-            }
-
-            &_row:last-child {
-                border-bottom: none;
-                font-size: 22px;
-            }
-
-            ul {
-                margin: 8px 0 0 0;
-                padding-left: 18px;
-                color: #546980;
-                font-size: 16px;
-                font-family: "Noto Sans TC";
-                font-weight: 400;
-                margin-left: 10px;
-            }
-        }
-
-        &__right {
-            width: 50%;
-            padding: 25px;
-
-            &__row {
-                display: flex;
+            &__left,
+            &__right {
                 width: 100%;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: flex-start;
-                font-size: 20px;
-                color: #546980;
-                font-family: "Noto Sans TC";
-                border-bottom: 1px solid #546980;
-                padding: 8px 0;
+                padding: 16px;
 
-                input {
-                    width: 15%;
-                    padding: 8px;
-                    margin-top: 6px;
-                    border: 1px solid #ccc;
-                    border-radius: 6px;
-                    font-size: 18px;
-                    color: #546980;
-                    font-family: "Noto Sans TC";
-                    box-sizing: border-box;
-                }
-            }
+                &__row {
+                    font-size: 16px;
 
-            &__row:last-child {
-                border-bottom: none;
-                font-size: 22px;
-            }
-
-            &__form {
-                margin: 10px 0px;
-
-                span {
-                    font-size: 20px;
-                    color: #546980;
-                    font-family: "Noto Sans TC";
+                    input {
+                        width: 30%;
+                        font-size: 16px;
+                    }
                 }
 
-                input {
-                    width: 100%;
-                    padding: 8px;
-                    margin-top: 6px;
-                    border: 1px solid #ccc;
-                    border-radius: 6px;
-                    font-size: 18px;
-                    color: #546980;
-                    font-family: "Noto Sans TC";
-                    box-sizing: border-box;
+                ul {
+                    font-size: 14px;
                 }
             }
         }
     }
 
     .confirm-btn {
-        width: 100%;
-        background: #546980;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 12px 0;
-        font-size: 22px;
-        font-family: "Noto Sans TC";
-        cursor: pointer;
-        transition: background 0.2s;
-
-        &:hover {
-            background: #3a4c5e;
-        }
+        font-size: 18px;
     }
 
-    .order-area {
-        h3 {
-            color: #546980;
-            text-align: center;
-            font-family: "Noto Sans TC";
-            font-size: 40px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 135%;
-        }
-    }
-
-    .no-room-msg {
-        width: 100%;
-        color: #546980;
-        text-align: center;
-        font-family: "Noto Sans TC";
-        font-size: 40px;
-    }
-
+    .no-room-msg,
     .recommend-title {
-        width: 100%;
-        color: #546980;
-        font-family: "Noto Sans TC";
-        font-size: 40px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .roomlist__title {
+        padding-top: 50px;
+    }
+    .roomlist__title {
+        h1 {
+            font-size: 32px;
+        }
+    }
+
+    .rl__content {
+        width: 100vw;
+        max-width: 100vw;
+        box-sizing: border-box;
+        padding: 0px 8px;
+        gap: 12px;
+        margin: 8px 0px;
+
+        &__date-info {
+            h2 {
+                font-size: 20px;
+                margin-bottom: 12px;
+                margin: 0;
+            }
+
+            span {
+                font-size: 12px;
+                margin-bottom: 12px;
+            }
+        }
+    }
+
+    .rl__content__list {
+        gap: 12px;
+
+        &__room-card {
+            min-width: unset;
+            height: auto;
+            width: 100%;
+            align-self: center;
+
+            &__img {
+                height: 20vh;
+            }
+
+            &__info {
+                h3 {
+                    font-size: 18px;
+                }
+
+                ul {
+                    font-size: 12px;
+                }
+
+                &__price {
+                    .price {
+                        font-size: 20px;
+                    }
+                }
+
+                &__qty {
+                    font-size: 12px;
+                }
+
+                &__btn {
+                    font-size: 16px;
+                    padding: 6px 20px;
+                }
+            }
+        }
+    }
+
+    .rl__content__process {
+        span {
+            font-size: 14px;
+        }
+    }
+
+    .rl__c__two {
+        &__order {
+
+            &__left,
+            &__right {
+                padding: 12px;
+
+                &__row {
+                    font-size: 14px;
+
+                    input {
+                        width: 40%;
+                        font-size: 14px;
+                    }
+                }
+
+                ul {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .confirm-btn {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    .no-room-msg,
+    .recommend-title {
+        font-size: 20px;
     }
 }
 </style>
