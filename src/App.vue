@@ -15,7 +15,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style>
 #app {
   min-height: 100vh;
 }
