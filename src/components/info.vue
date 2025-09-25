@@ -42,7 +42,7 @@ export default {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url('src/assets/backgroud2.jpg');
+    background-image: url('@/assets/backgroud2.jpg');
     will-change: background-image;
   }
 
