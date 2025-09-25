@@ -89,7 +89,7 @@ export default {
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-image: url('src/assets/background.jpg');
+        background-image: url('@/assets/background.jpg');
         will-change: background-image;
 
         h1 {
