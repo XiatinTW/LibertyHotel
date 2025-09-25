@@ -4,7 +4,7 @@
     "type": "探索雙人房",
     "desc": ["含早餐", "不可取消，不可修改", "到店支付"],
     "price": 3600,
-    "image": "/src/assets/Room/Room01.jpg",
+    "image": "/Room/Room01.jpg",
     "availability": [
       { "date": "2025-09-25", "rooms": 3 },
       { "date": "2025-09-26", "rooms": 2 },
@@ -16,7 +16,7 @@
     "type": "豪華家庭房",
     "desc": ["含早餐", "不可取消", "到店支付"],
     "price": 5200,
-    "image": "/src/assets/Room/Room02.png",
+    "image": "/Room/Room02.png",
     "availability": [
       { "date": "2025-09-25", "rooms": 1 },
       { "date": "2025-09-26", "rooms": 0 },
@@ -28,7 +28,7 @@
     "type": "景觀房",
     "desc": ["含早餐", "不可取消", "高樓層景觀", "到店支付"],
     "price": 4200,
-    "image": "/src/assets/Room/Room03.png",
+    "image": "/Room/Room03.png",
     "availability": [
       { "date": "2025-09-25", "rooms": 2 },
       { "date": "2025-09-26", "rooms": 2 },

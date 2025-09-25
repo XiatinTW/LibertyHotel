@@ -273,7 +273,7 @@ body {
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-image: url("src/assets/background.jpg");
+        background-image: url("@/assets/background.jpg");
         will-change: background-image;
 
         h1 {
@@ -384,8 +384,8 @@ body {
             box-shadow: 0 2px 8px rgba(84, 105, 128, 0.08);
 
             &__img {
-                width: 200px;
-                height: 140px;
+                width: 50%;
+                height: 30vh;
                 overflow: hidden;
                 border-radius: 8px;
 
