@@ -140,7 +140,7 @@ export default {
         position: relative;
         margin-right: 30px;
         background-color: #546980;
-        mask-image: url('src/assets/media.svg');
+        mask-image: url('@/assets/media.svg');
         mask-size: contain;
         mask-repeat: no-repeat;
         mask-position: center;
